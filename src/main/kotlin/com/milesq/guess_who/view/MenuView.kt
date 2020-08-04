@@ -1,5 +1,6 @@
 package com.milesq.guess_who.view
 
+import com.milesq.guess_who.app.Styles
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.scene.text.FontWeight
@@ -7,7 +8,7 @@ import tornadofx.*
 
 class MenuView: View("Zgadnij kto to") {
     override val root = vbox {
-        addClass("view-container")
+        addClass(Styles.viewContainer)
 
         borderpane {
             left<GameProperties>()
@@ -27,9 +28,7 @@ class MenuView: View("Zgadnij kto to") {
             }
 
             for (possibility in possibleWays) {
-                checkbox(possibility) {
-                    addClass("possible-ways__checkbox")
-                }
+                checkbox(possibility)
             }
 
             label("Liczba tur") {
@@ -50,11 +49,11 @@ class MenuView: View("Zgadnij kto to") {
     class GameController : View() {
         override val root = vbox() {
             button("Edycja Postaci") {
-                addClass("link-button", "link-button--nav")
+                addClass(Styles.linkButton, Styles.linkNavButton)
             }
 
             button("Zacznij") {
-                addClass("link-button", "link-button--nav")
+                addClass(Styles.linkButton, Styles.linkNavButton)
             }
         }
     }

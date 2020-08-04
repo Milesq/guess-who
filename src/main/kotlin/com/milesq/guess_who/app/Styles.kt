@@ -5,10 +5,10 @@ import tornadofx.*
 
 class Styles: Stylesheet() {
     companion object {
-        val linkButton by cssclass("link-button")
-        val linkNavButton by cssclass("link-button--nav")
+        val linkButton by cssclass()
+        val linkNavButton by cssclass()
         val root by cssclass("root")
-        val viewContainer by cssclass("view-container")
+        val viewContainer by cssclass()
     }
 
     init {
