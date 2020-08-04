@@ -4,7 +4,7 @@ import tornadofx.Stylesheet
 import tornadofx.box
 import tornadofx.px
 
-class Styles : Stylesheet() {
+class Styles: Stylesheet() {
     init {
         label {
             padding = box(5.px)
