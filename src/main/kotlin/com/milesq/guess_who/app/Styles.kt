@@ -7,11 +7,16 @@ class Styles: Stylesheet() {
     companion object {
         val linkButton by cssclass("link-button")
         val root by cssclass("root")
+        val viewContainer by cssclass("view-container")
     }
 
     init {
         root {
             fontSize = 24.px
+        }
+
+        viewContainer {
+            padding = box(0.px, 50.px)
         }
 
         label {
