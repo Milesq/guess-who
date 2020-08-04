@@ -3,6 +3,7 @@ package com.milesq.guess_who.view
 import com.milesq.guess_who.app.Styles
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
+import javafx.scene.layout.Priority
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
@@ -38,21 +39,23 @@ class MenuView: View("Zgadnij kto to") {
                 }
             }
 
-            val texasCities = FXCollections.observableArrayList("Nielimitowane", "1", "2", "5", "10")
+            val possibleTourNumber = FXCollections.observableArrayList("Nielimitowane", "1", "2", "5", "10")
 
             selectedTourNumber = SimpleStringProperty()
 
-            combobox(selectedTourNumber, texasCities)
+            combobox(selectedTourNumber, possibleTourNumber)
         }
     }
 
     class GameController : View() {
-        override val root = vbox() {
+        override val root = vbox {
             button("Edycja Postaci") {
+                vboxConstraints { marginTop = 30.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
             }
 
             button("Zacznij") {
+                vboxConstraints { marginTop = 60.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
             }
         }

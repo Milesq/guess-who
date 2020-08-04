@@ -17,7 +17,7 @@ class Styles: Stylesheet() {
         }
 
         viewContainer {
-            padding = box(0.px, 50.px)
+            padding = box(50.px)
         }
 
         label {
@@ -35,8 +35,7 @@ class Styles: Stylesheet() {
             }
 
             and(linkNavButton) {
-              prefWidth = 250.px
-              padding = box(50.px)
+              prefWidth = 150.px
             }
         }
     }
