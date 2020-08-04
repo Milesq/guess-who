@@ -7,6 +7,7 @@ class MenuView: View("Hello TornadoFX") {
     override val root = vbox {
         label("2")
         button("asd") {
+            addClass("link-button")
             action {
                 replaceWith<Game>()
             }
