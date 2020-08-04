@@ -7,6 +7,7 @@ import tornadofx.App
 class MyApp: App(MenuView::class, Styles::class) {
     override fun start(stage: Stage) {
         super.start(stage)
+        stage.isResizable = false
         stage.width = 726.0
         stage.height = 409.0
     }
