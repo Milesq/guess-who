@@ -1,12 +1,15 @@
 package com.milesq.guess_who.view
 
-import com.milesq.guess_who.app.Styles
+import javafx.scene.control.Alert
 import tornadofx.*
 
-class MainView : View("Hello TornadoFX") {
-    override val root = hbox {
-        label(title) {
-            addClass(Styles.heading)
+class MenuView : View("Hello TornadoFX") {
+    override val root = vbox {
+        label("2")
+        button("asd") {
+            action {
+                alert(Alert.AlertType.INFORMATION, "sad")
+            }
         }
     }
 }
