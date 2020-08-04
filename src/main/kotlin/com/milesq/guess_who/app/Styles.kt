@@ -6,13 +6,14 @@ import tornadofx.*
 class Styles: Stylesheet() {
     companion object {
         val linkButton by cssclass("link-button")
+        val linkNavButton by cssclass("link-button--nav")
         val root by cssclass("root")
         val viewContainer by cssclass("view-container")
     }
 
     init {
         root {
-            fontSize = 24.px
+            fontSize = 16.px
         }
 
         viewContainer {
@@ -31,6 +32,11 @@ class Styles: Stylesheet() {
             and(hover) {
                 backgroundColor += c(220, 211, 251)
                 cursor = Cursor.HAND
+            }
+
+            and(linkNavButton) {
+              prefWidth = 250.px
+              padding = box(50.px)
             }
         }
     }
