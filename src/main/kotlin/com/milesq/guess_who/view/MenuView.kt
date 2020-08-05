@@ -1,9 +1,9 @@
 package com.milesq.guess_who.view
 
+import com.milesq.guess_who.app.Game
 import com.milesq.guess_who.app.Styles
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
-import javafx.scene.layout.Priority
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
@@ -48,15 +48,19 @@ class MenuView: View("Zgadnij kto to") {
     }
 
     class GameController : View() {
+        private val menu: MenuView by inject()
+
         override val root = vbox {
             button("Edycja Postaci") {
                 vboxConstraints { marginTop = 30.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
+                action { menu.replaceWith<Settings>() }
             }
 
             button("Zacznij") {
                 vboxConstraints { marginTop = 60.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
+                action { menu.replaceWith<Game>() }
             }
         }
     }
