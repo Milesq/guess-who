@@ -11,9 +11,9 @@ class MenuView: View("Zgadnij kto to") {
     override val root = vbox {
         addClass(Styles.viewContainer)
 
-        borderpane {
-            left<GameProperties>()
-            right<GameController>()
+        hbox(50) {
+            add(GameProperties())
+            add(GameController())
         }
     }
 
