@@ -13,7 +13,7 @@ class Styles: Stylesheet() {
 
     init {
         root {
-            fontSize = 16.px
+            fontSize = 20.px
         }
 
         viewContainer {
