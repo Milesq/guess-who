@@ -2,8 +2,8 @@ package com.milesq.guess_who.view
 
 import com.milesq.guess_who.app.Game
 import com.milesq.guess_who.app.Styles
-import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
+import com.milesq.guess_who.model.TourNumber
+import javafx.beans.property.*
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
@@ -18,10 +18,14 @@ class MenuView: View("Zgadnij kto to") {
     }
 
     class GameProperties: View() {
-        lateinit var selectedTourNumber: SimpleStringProperty
+        val selectedTourNumber = SimpleStringProperty(TourNumber.UNLIMITED.value)
+        val possibleWays = listOf(
+            Pair("Pokazywanie bez mówienia", SimpleBooleanProperty(true)),
+            Pair("Omówienie", SimpleBooleanProperty(true)),
+            Pair("Rysunek", SimpleBooleanProperty(true))
+        )
 
         override val root = vbox {
-            val possibleWays = listOf("Pokazywanie bez mówienia", "Omówienie", "Rysunek")
             style {
                 borderColor += box(c("#a1a1a1"))
                 borderWidth += box(1.px)
@@ -29,7 +33,7 @@ class MenuView: View("Zgadnij kto to") {
             }
 
             for (possibility in possibleWays) {
-                checkbox(possibility)
+                checkbox(possibility.first, possibility.second)
             }
 
             label("Liczba tur") {
@@ -39,16 +43,21 @@ class MenuView: View("Zgadnij kto to") {
                 }
             }
 
-            val possibleTourNumber = FXCollections.observableArrayList("Nielimitowane", "1", "2", "5", "10")
+            val possibleTourNumber = listOf(
+                TourNumber.UNLIMITED,
+                TourNumber.ONE,
+                TourNumber.TWO,
+                TourNumber.FIVE,
+                TourNumber.TEN,
+            )
 
-            selectedTourNumber = SimpleStringProperty()
-
-            combobox(selectedTourNumber, possibleTourNumber)
+            combobox(selectedTourNumber, possibleTourNumber.map { it.value })
         }
     }
 
     class GameController : View() {
         private val menu: MenuView by inject()
+        private val gameProperties: GameProperties by inject()
 
         override val root = vbox {
             button("Edycja Postaci") {
@@ -60,7 +69,18 @@ class MenuView: View("Zgadnij kto to") {
             button("Zacznij") {
                 vboxConstraints { marginTop = 60.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
-                action { menu.replaceWith<Game>() }
+                action {
+                    val selectedTourNumber = TourNumber.fromValue((gameProperties.selectedTourNumber.value))
+                    val selectedShowingTypes = gameProperties.possibleWays.filter { it.second.value }.map { it.first }
+
+                    val params = mapOf(
+                        Game::tourNumber to selectedTourNumber,
+                        Game::possibleShowingTypes to selectedShowingTypes
+                    )
+
+                    val gameViewInstance = find<Game>(params)
+                    menu.replaceWith(gameViewInstance)
+                }
             }
         }
     }
