@@ -26,7 +26,7 @@ class Styles: Stylesheet() {
 
         linkButton {
             backgroundColor += c(200, 191, 231)
-            padding = box(10.px, 15.px)
+            padding = box(15.px, 20.px)
             backgroundRadius = multi(box(13.px))
 
             and(hover) {
@@ -35,7 +35,7 @@ class Styles: Stylesheet() {
             }
 
             and(linkNavButton) {
-              prefWidth = 150.px
+              prefWidth = 170.px
             }
         }
     }
