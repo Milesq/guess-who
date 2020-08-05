@@ -10,7 +10,7 @@ class Menu: View("Zgadnij kto to") {
     override val root = vbox {
         addClass(Styles.viewContainer)
 
-        hbox(50) {
+        vbox(50) {
             add(GameProperties())
             add(GameController())
         }
@@ -65,28 +65,20 @@ class Menu: View("Zgadnij kto to") {
         private val menu: Menu by inject()
         private val gameProperties: GameProperties by inject()
 
-        override val root = vbox {
-            button("Edycja Postaci") {
-                vboxConstraints { marginTop = 30.0 }
-                addClass(Styles.linkButton, Styles.linkNavButton)
-                action { menu.replaceWith<Settings>() }
-            }
+        override val root = button("Zacznij") {
+            vboxConstraints { marginTop = 60.0 }
+            addClass(Styles.linkButton, Styles.linkNavButton)
+            action {
+                val selectedTourNumber = TourNumber.fromValue((gameProperties.selectedTourNumber.value))
+                val selectedShowingTypes = gameProperties.possibleWays.filter { it.second.value }.map { it.first }
 
-            button("Zacznij") {
-                vboxConstraints { marginTop = 60.0 }
-                addClass(Styles.linkButton, Styles.linkNavButton)
-                action {
-                    val selectedTourNumber = TourNumber.fromValue((gameProperties.selectedTourNumber.value))
-                    val selectedShowingTypes = gameProperties.possibleWays.filter { it.second.value }.map { it.first }
+                val params = mapOf(
+                    Game::tourNumber to selectedTourNumber,
+                    Game::possibleShowingTypes to selectedShowingTypes
+                )
 
-                    val params = mapOf(
-                        Game::tourNumber to selectedTourNumber,
-                        Game::possibleShowingTypes to selectedShowingTypes
-                    )
-
-                    val gameViewInstance = find<Game>(params)
-                    menu.replaceWith(gameViewInstance)
-                }
+                val gameViewInstance = find<Game>(params)
+                menu.replaceWith(gameViewInstance)
             }
         }
     }
