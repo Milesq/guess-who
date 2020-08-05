@@ -36,6 +36,13 @@ class MenuView: View("Zgadnij kto to") {
                 checkbox(possibility.first, possibility.second)
             }
 
+            separator() {
+                vboxConstraints {
+                    marginTop = 10.0
+                }
+                prefHeight = 3.0
+            }
+
             label("Liczba tur") {
                 style {
                     fontWeight = FontWeight.SEMI_BOLD
