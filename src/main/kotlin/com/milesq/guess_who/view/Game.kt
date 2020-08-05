@@ -1,4 +1,4 @@
-package com.milesq.guess_who.app
+package com.milesq.guess_who.view
 
 import com.milesq.guess_who.model.TourNumber
 import tornadofx.*

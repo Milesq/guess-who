@@ -1,6 +1,6 @@
 package com.milesq.guess_who.app
 
-import com.milesq.guess_who.view.MenuView
+import com.milesq.guess_who.view.Menu
 import tornadofx.App
 
-class MyApp: App(MenuView::class, Styles::class)
+class MyApp: App(Menu::class, Styles::class)

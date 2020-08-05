@@ -5,7 +5,7 @@ import tornadofx.*
 class Settings: View("Ustawienia") {
     override val root = hbox {
         button("Ustawienia").action {
-            replaceWith<MenuView>()
+            replaceWith<Menu>()
         }
     }
 }

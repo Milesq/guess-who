@@ -1,13 +1,12 @@
 package com.milesq.guess_who.view
 
-import com.milesq.guess_who.app.Game
 import com.milesq.guess_who.app.Styles
 import com.milesq.guess_who.model.TourNumber
 import javafx.beans.property.*
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
-class MenuView: View("Zgadnij kto to") {
+class Menu: View("Zgadnij kto to") {
     override val root = vbox {
         addClass(Styles.viewContainer)
 
@@ -63,7 +62,7 @@ class MenuView: View("Zgadnij kto to") {
     }
 
     class GameController : View() {
-        private val menu: MenuView by inject()
+        private val menu: Menu by inject()
         private val gameProperties: GameProperties by inject()
 
         override val root = vbox {
