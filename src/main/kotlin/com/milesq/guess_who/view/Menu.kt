@@ -8,72 +8,63 @@ import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class Menu: View("Zgadnij kto to") {
+    private val selectedTourNumber = SimpleStringProperty(TourNumber.UNLIMITED.value)
+    private val possibleWays = readShowingWays().map {
+        Pair(it, SimpleBooleanProperty(true))
+    }
+
     override val root = vbox {
         addClass(Styles.viewContainer)
 
         vbox(50) {
-            add(GameProperties())
-            add(GameController())
-        }
-    }
+            vbox {
+                addClass(Styles.bordered)
 
-    class GameProperties: View() {
-        val selectedTourNumber = SimpleStringProperty(TourNumber.UNLIMITED.value)
-        val possibleWays = readShowingWays().map {
-            Pair(it, SimpleBooleanProperty(true))
-        }
-
-        override val root = vbox {
-            addClass(Styles.bordered)
-
-            for (possibility in possibleWays) {
-                checkbox(possibility.first, possibility.second)
-            }
-
-            separator() {
-                vboxConstraints {
-                    marginTop = 10.0
+                for (possibility in possibleWays) {
+                    checkbox(possibility.first, possibility.second)
                 }
-                prefHeight = 3.0
-            }
 
-            label("Liczba tur") {
-                style {
-                    fontWeight = FontWeight.SEMI_BOLD
-                    fontSize = 20.px
+                separator {
+                    vboxConstraints {
+                        marginTop = 10.0
+                    }
+                    prefHeight = 3.0
                 }
-            }
 
-            val possibleTourNumber = listOf(
-                TourNumber.UNLIMITED,
-                TourNumber.ONE,
-                TourNumber.TWO,
-                TourNumber.FIVE,
-                TourNumber.TEN,
-            )
+                label("Liczba tur") {
+                    style {
+                        fontWeight = FontWeight.SEMI_BOLD
+                        fontSize = 20.px
+                    }
+                }
 
-            combobox(selectedTourNumber, possibleTourNumber.map { it.value })
-        }
-    }
-
-    class GameController : View() {
-        private val menu: Menu by inject()
-        private val gameProperties: GameProperties by inject()
-
-        override val root = button("Zacznij") {
-            vboxConstraints { marginTop = 60.0 }
-            addClass(Styles.linkButton, Styles.linkNavButton)
-            action {
-                val selectedTourNumber = TourNumber.fromValue((gameProperties.selectedTourNumber.value))
-                val selectedShowingTypes = gameProperties.possibleWays.filter { it.second.value }.map { it.first }
-
-                val params = mapOf(
-                    Game::tourNumber to selectedTourNumber,
-                    Game::possibleShowingTypes to selectedShowingTypes
+                val possibleTourNumber = listOf(
+                    TourNumber.UNLIMITED,
+                    TourNumber.ONE,
+                    TourNumber.TWO,
+                    TourNumber.FIVE,
+                    TourNumber.TEN,
                 )
 
-                val gameViewInstance = find<Game>(params)
-                menu.replaceWith(gameViewInstance)
+                combobox(selectedTourNumber, possibleTourNumber.map { it.value })
+            }
+
+            button("Zacznij") {
+                vboxConstraints { marginTop = 60.0 }
+                addClass(Styles.linkButton, Styles.linkNavButton)
+                action {
+                    val selectedTourNumber = TourNumber.fromValue((selectedTourNumber.value))
+                    val selectedShowingTypes = possibleWays.filter { it.second.value }.map { it.first }
+                    println(selectedShowingTypes)
+
+                    val params = mapOf(
+                        Game::tourNumber to selectedTourNumber,
+                        Game::possibleShowingTypes to selectedShowingTypes
+                    )
+
+                    val gameViewInstance = find<Game>(params)
+                    replaceWith(gameViewInstance)
+                }
             }
         }
     }
