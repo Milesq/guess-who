@@ -39,15 +39,17 @@ class Game: View() {
             }
         }
 
-        button("Następny") {
-            addClass(Styles.linkButton, Styles.linkNavButton)
-            action {
-                game.nextPerson()
-            }
-        }
-
         // Exit button placed in bottom right corner
         bottom = borderpane {
+            left = button("Następne") {
+                addClass(Styles.linkButton, Styles.linkNavButton, Styles.linkOkButton)
+                action { game.nextPerson() }
+            }
+
+            center = vbox {
+                padding = insets(5)
+            }
+
             right = button("Wyjście") {
                 addClass(Styles.linkButton, Styles.linkNavButton)
                 action { replaceWith<Menu>() }
@@ -58,7 +60,8 @@ class Game: View() {
 
 class GameController: Controller() {
     private val defaultPersons = loadPersons().persons // destructuring is not allowed here
-    private var persons: List<Person> = defaultPersons
+    private var persons: MutableList<Person> = defaultPersons.toMutableList()
+
     val currentPerson = SimpleStringProperty()
     val personTips = SimpleStringProperty()
 
@@ -69,9 +72,15 @@ class GameController: Controller() {
     }
 
     private fun loadNewPerson() {
+        if (persons.isEmpty())
+            persons = defaultPersons.toMutableList()
+
         val nextPersonID = Random.nextInt(persons.size)
 
-        currentPerson.value = "asd"
-        personTips.value = "alksjdalkds"
+        val (name, tips) = persons[nextPersonID]
+        persons.removeAt(nextPersonID)
+
+        currentPerson.value = name
+        personTips.value = tips.fold("") { acc, next -> "$acc\n- $next" }
     }
 }
