@@ -1,0 +1,12 @@
+{
+    "persons": [
+        {
+            "name": "Mojżesz",
+            "tips": ["Był synem córki faraona"]
+        },
+        {
+            "name": "Jezus",
+            "tips": ["Mesjasz", "Syn Boży"]
+        }
+    ]
+}
