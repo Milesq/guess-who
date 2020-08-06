@@ -2,9 +2,12 @@ package com.milesq.guess_who.model
 
 import java.io.File
 
-fun showingWays(): List<String> {
-    val waysOfShowing = mutableListOf<String>()
-    File("./waysOfShowing.txt").forEachLine { waysOfShowing.add(it) }
+private fun readFile(name: String): List<String> {
+    val listToReturn = mutableListOf<String>()
+    File(name).forEachLine { listToReturn.add(it) }
 
-    return waysOfShowing
+    return listToReturn
 }
+
+fun readShowingWays(): List<String> = readFile("./waysOfShowing.txt")
+fun readPersons(): List<String> = readFile("./persons.txt")

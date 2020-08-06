@@ -7,6 +7,7 @@ class Styles: Stylesheet() {
     companion object {
         val linkButton by cssclass()
         val linkNavButton by cssclass()
+        val bordered by cssclass()
         val root by cssclass("root")
         val viewContainer by cssclass()
     }
@@ -22,6 +23,12 @@ class Styles: Stylesheet() {
 
         label {
             padding = box(5.px)
+        }
+
+        bordered {
+            borderColor += box(c("#a1a1a1"))
+            borderWidth += box(1.px)
+            padding = box(35.px, 20.px)
         }
 
         linkButton {
