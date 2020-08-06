@@ -55,7 +55,6 @@ class Menu: View("Zgadnij kto to") {
                 action {
                     val selectedTourNumber = TourNumber.fromValue((selectedTourNumber.value))
                     val selectedShowingTypes = possibleWays.filter { it.second.value }.map { it.first }
-                    println(selectedShowingTypes)
 
                     val params = mapOf(
                         Game::tourNumber to selectedTourNumber,
