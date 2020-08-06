@@ -6,6 +6,7 @@ import tornadofx.*
 class Styles: Stylesheet() {
     companion object {
         val linkButton by cssclass()
+        val linkOkButton by cssclass()
         val linkNavButton by cssclass()
         val bordered by cssclass()
         val root by cssclass("root")
@@ -18,7 +19,7 @@ class Styles: Stylesheet() {
         }
 
         viewContainer {
-            padding = box(50.px)
+            padding = box(55.px)
         }
 
         label {
@@ -43,6 +44,10 @@ class Styles: Stylesheet() {
 
             and(linkNavButton) {
               prefWidth = 170.px
+            }
+
+            and(linkOkButton) {
+                backgroundColor += c(67, 255, 38)
             }
         }
     }
