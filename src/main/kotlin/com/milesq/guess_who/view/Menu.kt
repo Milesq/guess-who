@@ -2,6 +2,7 @@ package com.milesq.guess_who.view
 
 import com.milesq.guess_who.app.Styles
 import com.milesq.guess_who.model.TourNumber
+import com.milesq.guess_who.model.showingWays
 import javafx.beans.property.*
 import javafx.scene.text.FontWeight
 import tornadofx.*
@@ -18,11 +19,9 @@ class Menu: View("Zgadnij kto to") {
 
     class GameProperties: View() {
         val selectedTourNumber = SimpleStringProperty(TourNumber.UNLIMITED.value)
-        val possibleWays = listOf(
-            Pair("Pokazywanie bez mówienia", SimpleBooleanProperty(true)),
-            Pair("Omówienie", SimpleBooleanProperty(true)),
-            Pair("Rysunek", SimpleBooleanProperty(true))
-        )
+        val possibleWays = showingWays().map {
+            Pair(it, SimpleBooleanProperty(true))
+        }
 
         override val root = vbox {
             style {
