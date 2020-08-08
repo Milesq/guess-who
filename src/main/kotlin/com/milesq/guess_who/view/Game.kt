@@ -20,13 +20,32 @@ class Game: View() {
     private val personTips = SimpleStringProperty()
     private val howToShow = SimpleStringProperty()
 
+    private var pastTours = 0
+
     override fun onDock() {
         super.onDock()
         nextPerson()
     }
 
+    override fun onUndock() {
+        super.onUndock()
+        pastTours = 0
+        currentPerson.value = ""
+        personTips.value = ""
+        howToShow.value = ""
+    }
+
     private fun nextPerson() {
-        loadNewPerson()
+        val flag = if (tourNumber == TourNumber.UNLIMITED) {
+            true
+        } else {
+            pastTours < tourNumber.value.toInt()
+        }
+
+        if (flag) {
+            pastTours++
+            loadNewPerson()
+        } else exit()
     }
 
     private fun loadNewPerson() {
@@ -41,6 +60,10 @@ class Game: View() {
         currentPerson.value = name
         howToShow.value = possibleShowingTypes.random()
         personTips.value = tips.fold("") { acc, next -> "$acc\n- $next" }
+    }
+
+    private fun exit() {
+        replaceWith<Menu>()
     }
 
     override val root = borderpane {
