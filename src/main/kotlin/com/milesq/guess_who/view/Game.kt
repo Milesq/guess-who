@@ -69,6 +69,9 @@ class Game: View() {
     override val root = borderpane {
         addClass(Styles.viewContainer)
 
+        shortcut("Enter") { nextPerson() }
+        shortcut("Esc") { exit() }
+
         center = vbox {
             borderpane {
                 left = label {
@@ -107,7 +110,7 @@ class Game: View() {
 
             right = button("Wyjście") {
                 addClass(Styles.linkButton, Styles.linkNavButton)
-                action { replaceWith<Menu>() }
+                action { exit() }
             }
         }
     }

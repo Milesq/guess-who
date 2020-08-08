@@ -16,6 +16,21 @@ class Menu: View("Zgadnij kto to") {
     override val root = vbox {
         addClass(Styles.viewContainer)
 
+        val startGame: () -> Unit = {
+            val selectedTourNumber = TourNumber.fromValue((selectedTourNumber.value))
+            val selectedShowingTypes = possibleWays.filter { it.second.value }.map { it.first }
+
+            val params = mapOf(
+                Game::tourNumber to selectedTourNumber,
+                Game::possibleShowingTypes to selectedShowingTypes
+            )
+
+            val gameViewInstance = find<Game>(params)
+            replaceWith(gameViewInstance)
+        }
+
+        shortcut("Enter", startGame)
+
         vbox(50) {
             vbox {
                 addClass(Styles.bordered)
@@ -52,18 +67,7 @@ class Menu: View("Zgadnij kto to") {
             button("Zacznij") {
                 vboxConstraints { marginTop = 60.0 }
                 addClass(Styles.linkButton, Styles.linkNavButton)
-                action {
-                    val selectedTourNumber = TourNumber.fromValue((selectedTourNumber.value))
-                    val selectedShowingTypes = possibleWays.filter { it.second.value }.map { it.first }
-
-                    val params = mapOf(
-                        Game::tourNumber to selectedTourNumber,
-                        Game::possibleShowingTypes to selectedShowingTypes
-                    )
-
-                    val gameViewInstance = find<Game>(params)
-                    replaceWith(gameViewInstance)
-                }
+                action(startGame)
             }
         }
     }
