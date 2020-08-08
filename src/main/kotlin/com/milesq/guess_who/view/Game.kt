@@ -13,61 +13,19 @@ class Game: View() {
     val tourNumber: TourNumber by param()
     val possibleShowingTypes: List<String> by param()
 
-    private val game: GameController by inject()
-
-    init { game.nextPerson() }
-
-    override val root = borderpane {
-        addClass(Styles.viewContainer)
-
-        center = vbox {
-            label {
-                bind(game.currentPerson)
-            }
-
-            vbox {
-                addClass(Styles.bordered)
-                style {
-                    padding = box(15.px, 0.px)
-                }
-                vboxConstraints {
-                    marginTop = 50.0
-                }
-                alignment = Pos.CENTER
-
-                label(game.personTips)
-            }
-        }
-
-        // Exit button placed in bottom right corner
-        bottom = borderpane {
-            left = button("Następne") {
-                addClass(Styles.linkButton, Styles.linkNavButton, Styles.linkOkButton)
-                action { game.nextPerson() }
-            }
-
-            center = vbox {
-                padding = insets(5)
-            }
-
-            right = button("Wyjście") {
-                addClass(Styles.linkButton, Styles.linkNavButton)
-                action { replaceWith<Menu>() }
-            }
-        }
-    }
-}
-
-class GameController: Controller() {
     private val defaultPersons = loadPersons().persons // destructuring is not allowed here
     private var persons: MutableList<Person> = defaultPersons.toMutableList()
 
-    val currentPerson = SimpleStringProperty()
-    val personTips = SimpleStringProperty()
+    private val currentPerson = SimpleStringProperty()
+    private val personTips = SimpleStringProperty()
+    private val howToShow = SimpleStringProperty()
 
-    init { loadNewPerson() }
+    override fun onDock() {
+        super.onDock()
+        nextPerson()
+    }
 
-    fun nextPerson() {
+    private fun nextPerson() {
         loadNewPerson()
     }
 
@@ -81,6 +39,53 @@ class GameController: Controller() {
         persons.removeAt(nextPersonID)
 
         currentPerson.value = name
+        howToShow.value = possibleShowingTypes.random()
         personTips.value = tips.fold("") { acc, next -> "$acc\n- $next" }
+    }
+
+    override val root = borderpane {
+        addClass(Styles.viewContainer)
+
+        center = vbox {
+            borderpane {
+                left = label {
+                    bind(currentPerson)
+                }
+
+                right = label {
+                    bind(howToShow)
+                }
+            }
+
+            vbox {
+                addClass(Styles.bordered)
+                style {
+                    padding = box(15.px, 0.px)
+                }
+                vboxConstraints {
+                    marginTop = 50.0
+                }
+                alignment = Pos.CENTER
+
+                label(personTips)
+            }
+        }
+
+        // Exit button placed in bottom right corner
+        bottom = borderpane {
+            left = button("Następne") {
+                addClass(Styles.linkButton, Styles.linkNavButton, Styles.linkOkButton)
+                action { nextPerson() }
+            }
+
+            center = vbox {
+                padding = insets(5)
+            }
+
+            right = button("Wyjście") {
+                addClass(Styles.linkButton, Styles.linkNavButton)
+                action { replaceWith<Menu>() }
+            }
+        }
     }
 }
